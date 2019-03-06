@@ -1,5 +1,5 @@
 {
-  "name": "demo1",
+  "name": "demo-todo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,7 +14,9 @@
     "request-promise-native": "^1.0.7"
   },
   "scripts": {
-    "start": "npx concurrently 'react-scripts start' 'node backend'",
+    "start-all": "npx concurrently 'react-scripts start' 'node backend'",
+    "start-backend": "node backend",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
