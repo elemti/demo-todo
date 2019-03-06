@@ -1,3 +1,4 @@
+import { debounce } from 'debounce';
 import React from 'react';
 import request from 'request-promise-native';
 import App from '../App';
@@ -31,7 +32,7 @@ export default class extends React.Component {
       }).catch(console.error);
       await this.actions.loadTasks();
     },
-    updateTask: async task => {
+    updateTask: task => {
       const tasks = this.state.tasks.map(_task => {
         if (task.id === _task.id) {
           return {
@@ -42,13 +43,16 @@ export default class extends React.Component {
         return _task;
       });
       this.setState({ tasks });
+      this.actions.updateTaskBackend(task);
+    },
+    updateTaskBackend: debounce(async task => {
       await request.patch({
         url: `${window.location.origin}/api/tasks/${task.id}`,
         json: true,
         body: task,
       }).catch(console.error);
       await this.actions.loadTasks();
-    },
+    }, 300),
     deleteTask: async id => {
       this.setState({ tasks: this.state.tasks.filter(task => task.id !== id) });
       await request.delete({
