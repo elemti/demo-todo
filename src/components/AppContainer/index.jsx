@@ -7,8 +7,8 @@ export default class extends React.Component {
   actions = {
     loadTasks: async () => {
       try {
-        const { tasks } = await request.get({
-          uri: 'http://localhost:12080/getTasks',
+        const tasks = await request.get({
+          url: `${window.location.origin}/api/tasks`,
           json: true,
         });
         this.setState({ tasks });
@@ -25,7 +25,7 @@ export default class extends React.Component {
       };
       this.setState({ tasks: this.state.tasks.concat(newTask) });
       await request.post({
-        uri: 'http://localhost:12080/addTask',
+        url: `${window.location.origin}/api/tasks`,
         json: true,
         body: newTask,
       }).catch(console.error);
@@ -42,8 +42,8 @@ export default class extends React.Component {
         return _task;
       });
       this.setState({ tasks });
-      await request.post({
-        uri: 'http://localhost:12080/updateTask',
+      await request.patch({
+        url: `${window.location.origin}/api/tasks/${task.id}`,
         json: true,
         body: task,
       }).catch(console.error);
@@ -51,10 +51,9 @@ export default class extends React.Component {
     },
     deleteTask: async id => {
       this.setState({ tasks: this.state.tasks.filter(task => task.id !== id) });
-      await request.post({
-        uri: 'http://localhost:12080/deleteTask',
+      await request.delete({
+        url: `${window.location.origin}/api/tasks/${id}`,
         json: true,
-        body: { id },
       }).catch(console.error);
       await this.actions.loadTasks();
     },
