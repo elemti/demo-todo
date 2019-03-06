@@ -32,4 +32,4 @@ app.get('/getTasks', (req, res) => res.json({
   tasks: state.tasks,
 }));
 
-app.listen(12080);
+app.listen(12080, () => console.log('backend listening on port 12080'));

@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "react": "^16.8.4",
@@ -13,8 +14,7 @@
     "request-promise-native": "^1.0.7"
   },
   "scripts": {
-    "start-backend": "node backend",
-    "start": "react-scripts start",
+    "start": "npx concurrently 'react-scripts start' 'node backend'",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
